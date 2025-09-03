@@ -6,10 +6,12 @@
     <title>Shiva Gupta | Bio-Tech Project</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- General Styles --- */
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f4f7f9; /* Light gray background */
+            background-color: #f4f7f9;
             color: #333;
             display: flex;
             align-items: center;
@@ -24,15 +26,26 @@
             max-width: 900px;
             background-color: #ffffff;
             border-radius: 1rem;
-            box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+            box-shadow: 0 8px 32px rgba(149, 157, 165, 0.25);
             padding: 2.5rem;
             border: 1px solid #e0e0e0;
         }
 
-        /* --- Profile Header Section --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .profile-header {
             text-align: center;
             margin-bottom: 3rem;
+            animation: fadeInUp 0.5s ease-out forwards;
         }
 
         .profile-image {
@@ -43,6 +56,11 @@
             margin-bottom: 1.5rem;
             border: 5px solid #ffffff;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .title {
@@ -59,13 +77,14 @@
             margin-top: 0.5rem;
         }
         
-        /* --- Project Display Section --- */
         .project-display {
             background-color: #fdfdfd;
             border-radius: 1rem;
             padding: 2rem;
             border: 1px solid #e7e7e7;
             text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out 0.2s forwards;
         }
 
         .project-title {
@@ -81,6 +100,53 @@
             border-radius: 0.5rem;
             border: 1px solid #ddd;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+    
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            
+            /* Hidden by default */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Show when targeted */
+        .lightbox:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 3rem;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -96,12 +162,17 @@
 
         <div class="project-display">
             <h3 class="project-title">My Project</h3>
-            <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="My Project Image" class="project-image">
+            <a href="#project-view">
+                <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="My Project Image" class="project-image">
+            </a>
         </div>
 
     </div>
+
+    <a href="#" class="lightbox" id="project-view">
+        <span class="close">&times;</span>
+        <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="Enlarged Project View">
+    </a>
+
 </body>
 </html>
-
-
-
