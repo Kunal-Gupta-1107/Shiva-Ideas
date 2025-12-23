@@ -4,175 +4,385 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shiva Gupta | Bio-Tech Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Using Inter font for a clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Using FontAwesome for nice icons (Lightweight CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        html {
-            scroll-behavior: smooth;
+        /* --- CSS VARIABLES FOR THEME --- */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #475569;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --accent-pdf: #ef4444;
+            --accent-ppt: #f97316;
+            --accent-vid: #3b82f6;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
         }
+
+        /* --- GLOBAL RESET & TYPOGRAPHY --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f4f7f9;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
             min-height: 100vh;
-            padding: 2rem;
-            margin: 0;
+            padding: 2rem 1rem;
         }
 
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- LAYOUT CONTAINER --- */
         .container {
-            width: 100%;
-            max-width: 900px;
-            background-color: #ffffff;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* --- PROFILE SECTION --- */
+        .profile-card {
+            background: var(--card-bg);
             border-radius: 1rem;
-            box-shadow: 0 8px 32px rgba(149, 157, 165, 0.25);
-            padding: 2.5rem;
-            border: 1px solid #e0e0e0;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .profile-header {
+            box-shadow: var(--shadow-md);
+            padding: 3rem 2rem;
             text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeInUp 0.5s ease-out forwards;
+            border-top: 5px solid var(--primary-color);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .profile-image-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 1.5rem;
         }
 
         .profile-image {
-            width: 150px;
-            height: 150px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 1.5rem;
-            border: 5px solid #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .profile-image:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border: 4px solid white;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
         }
 
-        .title {
-            font-size: 2.5rem;
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 2.25rem;
             font-weight: 700;
-            margin: 0;
-            color: #2c3e50;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
         }
 
         .subtitle {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
+            color: var(--primary-color);
             font-weight: 600;
-            color: #7f8c8d;
-            margin-top: 0.5rem;
-        }
-        
-        .project-display {
-            background-color: #fdfdfd;
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid #e7e7e7;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUp 0.5s ease-out 0.2s forwards;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .project-title {
+        .bio-text {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+
+        /* --- SECTIONS --- */
+        .section-title {
             font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #3498db;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--primary-color);
         }
 
-        .project-image {
-            max-width: 100%;
-            height: auto;
+        /* --- GRID FOR RESOURCES --- */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* --- CARDS (Video, PPT, PDF) --- */
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Card Header with Icon */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .card-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Specific Colors for File Types */
+        .pdf-style .icon-box { background: var(--accent-pdf); }
+        .ppt-style .icon-box { background: var(--accent-ppt); }
+        .vid-style .icon-box { background: var(--accent-vid); }
+
+        /* --- PREVIEWS --- */
+        .preview-area {
+            width: 100%;
             border-radius: 0.5rem;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background: #f1f5f9;
         }
-        .project-image:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+        /* Video Responsive Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
         }
-    
-        .lightbox {
-            position: fixed;
+
+        .video-container iframe, 
+        .video-container video {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            border: none;
+        }
+
+        /* Image preview for Docs */
+        .doc-preview-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- ACTION BUTTONS --- */
+        .btn-group {
+            margin-top: auto; /* Pushes buttons to bottom */
             display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            
-            /* Hidden by default */
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        /* Show when targeted */
-        .lightbox:target {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
+            gap: 0.5rem;
+            padding: 0.75rem;
             border-radius: 0.5rem;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
         }
 
-        .lightbox .close {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            font-size: 3rem;
+        .btn-primary {
+            background-color: var(--primary-color);
             color: white;
-            text-decoration: none;
-            font-weight: bold;
+        }
+        .btn-primary:hover { background-color: #1d4ed8; }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #cbd5e1;
+            color: var(--text-dark);
+        }
+        .btn-outline:hover { background-color: #f1f5f9; border-color: #94a3b8; }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .container { padding: 0; }
+            h1 { font-size: 1.75rem; }
+            .resources-grid { grid-template-columns: 1fr; }
+            .btn { padding: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        
-        <div class="profile-header">
-            <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/shiva.png" alt="Profile Picture" class="profile-image">
-            <h1 class="title">Shiva Gupta</h1>
-            <h2 class="subtitle">Biotechnology Student</h2>
+
+        <!-- 1. PROFILE HEADER SECTION -->
+        <section class="profile-card">
+            <div class="profile-image-wrapper">
+                <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/shiva.png" alt="Shiva Gupta" class="profile-image">
+            </div>
+            <h1>Shiva Gupta</h1>
+            <div class="subtitle">Biotechnology Student</div>
+            <p class="bio-text">
+                Exploring the intersection of biology and technology. 
+                Below are the resources, presentations, and visual demonstrations of my latest Bio-Tech project.
+            </p>
+        </section>
+
+        <!-- 2. VIDEO PRESENTATION SECTION -->
+        <div>
+            <div class="section-title">
+                <i class="fa-solid fa-play-circle"></i> Project Demonstration
+            </div>
+            
+            <div class="resource-card vid-style" style="animation: fadeIn 0.7s ease-out;">
+                <div class="card-header">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Video Walkthrough</h3>
+                        <p>A visual explanation of the experimental process.</p>
+                    </div>
+                </div>
+                
+                <div class="preview-area">
+                    <div class="video-container">
+                        <!-- REPLACE 'video.mp4' WITH YOUR ACTUAL FILE PATH -->
+                        <!-- You can also use a YouTube embed iframe here -->
+                        <video controls poster="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein_video_image.jpg">
+                            <source src="/protein.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="project-display">
-            <h3 class="project-title">My Project</h3>
-            <a href="#project-view">
-                <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="My Project Image" class="project-image">
-            </a>
+        <!-- 3. DOCUMENTS GRID (PDF & PPTX) -->
+        <div>
+            <div class="section-title">
+                <i class="fa-solid fa-folder-open"></i> Project Documents
+            </div>
+
+            <div class="resources-grid">
+                
+                <!-- PPTX CARD -->
+                <div class="resource-card ppt-style">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-file-powerpoint"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Presentation Slides</h3>
+                            <p>PowerPoint (PPTX)</p>
+                        </div>
+                    </div>
+                    <!-- Using the Protein Image as a preview thumbnail -->
+                    <div class="preview-area">
+                        <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="PPT Preview" class="doc-preview-img">
+                    </div>
+                    <div class="btn-group">
+                        <!-- REPLACE href WITH YOUR ACTUAL PPTX FILE PATH -->
+                        <a href="proteinx.pptx" download class="btn btn-primary">
+                            <i class="fa-solid fa-download"></i> Download PPT
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PDF CARD -->
+                <div class="resource-card pdf-style">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Research Report</h3>
+                            <p>Full Documentation (PDF)</p>
+                        </div>
+                    </div>
+                    <!-- Generic placeholder preview or a screenshot of the PDF -->
+                    <div class="preview-area">
+                        <!-- Using a slightly different style or filter to distinguish -->
+                        <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="PDF Preview" class="doc-preview-img" style="filter: grayscale(80%);">
+                    </div>
+                    <div class="btn-group">
+                        <!-- REPLACE href WITH YOUR ACTUAL PDF FILE PATH -->
+                        <a href="proteinPdf.pdf" target="_blank" class="btn btn-outline">
+                            <i class="fa-solid fa-eye"></i> View
+                        </a>
+                        <a href="your-document.pdf" download class="btn btn-primary">
+                            <i class="fa-solid fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
+        <footer>
+            <p>&copy; 2024 Shiva Gupta. All Rights Reserved.</p>
+        </footer>
 
     </div>
-
-    <a href="#" class="lightbox" id="project-view">
-        <span class="close">&times;</span>
-        <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="Enlarged Project View">
-    </a>
 
 </body>
 </html>
