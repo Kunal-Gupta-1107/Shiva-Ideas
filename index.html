@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shiva Gupta | Bio-Tech Project</title>
-    <!-- Using Inter font for a clean look -->
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Using FontAwesome for nice icons (Lightweight CDN) -->
+   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- CSS VARIABLES FOR THEME --- */
         :root {
             --primary-color: #2563eb;
             --secondary-color: #475569;
@@ -21,12 +20,12 @@
             --accent-pdf: #ef4444;
             --accent-ppt: #f97316;
             --accent-vid: #3b82f6;
+            --accent-photo: #10b981; /* Added for the photo section */
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
             --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
         }
 
-        /* --- GLOBAL RESET & TYPOGRAPHY --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -46,6 +45,11 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         /* --- LAYOUT CONTAINER --- */
@@ -181,6 +185,7 @@
         .pdf-style .icon-box { background: var(--accent-pdf); }
         .ppt-style .icon-box { background: var(--accent-ppt); }
         .vid-style .icon-box { background: var(--accent-vid); }
+        .photo-style .icon-box { background: var(--accent-photo); }
 
         /* --- PREVIEWS --- */
         .preview-area {
@@ -253,6 +258,98 @@
         }
         .btn-outline:hover { background-color: #f1f5f9; border-color: #94a3b8; }
 
+        /* --- MAIN PHOTO ZOOM SECTION --- */
+        .featured-photo-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .featured-photo-wrapper img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .featured-photo-wrapper:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Overlay indicator for click-ability */
+        .zoom-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            gap: 0.5rem;
+        }
+
+        .featured-photo-wrapper:hover .zoom-overlay {
+            opacity: 1;
+        }
+
+        /* --- LIGHTBOX MODAL --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; 
+            z-index: 9999; 
+            padding-top: 50px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(15, 23, 42, 0.95); /* Deep slate semi-transparent */
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: zoomIn 0.3s ease-out forwards;
+            object-fit: contain; /* Ensures image maintains aspect ratio and fits screen */
+        }
+
+        /* Close Button */
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--accent-pdf);
+            text-decoration: none;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
         /* --- FOOTER --- */
         footer {
             text-align: center;
@@ -267,6 +364,12 @@
             h1 { font-size: 1.75rem; }
             .resources-grid { grid-template-columns: 1fr; }
             .btn { padding: 0.8rem; }
+            
+            /* Adjust modal for mobile */
+            .modal { padding-top: 30px; }
+            .close-modal { top: 10px; right: 20px; font-size: 35px; }
+            .modal-content { max-width: 95%; }
+            .featured-photo-wrapper img { max-height: 300px; }
         }
     </style>
 </head>
@@ -287,7 +390,35 @@
             </p>
         </section>
 
-        <!-- 2. VIDEO PRESENTATION SECTION -->
+        <!-- 2. FEATURED PHOTO SECTION (NEW) -->
+        <div>
+            <div class="section-title">
+                <i class="fa-solid fa-camera-retro"></i> Project Snapshot
+            </div>
+            
+            <div class="resource-card photo-style" style="animation: fadeIn 0.65s ease-out;">
+                <div class="card-header">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Featured Image</h3>
+                        <p>High-resolution view of the experiment.</p>
+                    </div>
+                </div>
+                
+                <!-- The image wrapper that triggers the modal -->
+                <div class="featured-photo-wrapper" id="photoTrigger">
+                    <img src="https://kunal-gupta-1107.github.io/Shiva-Ideas/Protein.jpg" alt="Main Project Snapshot" id="featuredImg">
+                    
+                    <div class="zoom-overlay">
+                        <i class="fa-solid fa-magnifying-glass-plus"></i> View Fullscreen
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. VIDEO PRESENTATION SECTION -->
         <div>
             <div class="section-title">
                 <i class="fa-solid fa-play-circle"></i> Project Demonstration
@@ -317,7 +448,7 @@
             </div>
         </div>
 
-        <!-- 3. DOCUMENTS GRID (PDF & PPTX) -->
+        <!-- 4. DOCUMENTS GRID (PDF & PPTX) -->
         <div>
             <div class="section-title">
                 <i class="fa-solid fa-folder-open"></i> Project Documents
@@ -384,11 +515,57 @@
 
     </div>
 
+    <!-- --- THE LIGHTBOX MODAL --- -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="zoomedImage">
+    </div>
+
+    <!-- JAVASCRIPT FOR MODAL FUNCTIONALITY -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the modal elements
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("zoomedImage");
+            
+            // Get the trigger element (the image wrapper) and the actual image inside it
+            const trigger = document.getElementById("photoTrigger");
+            const imgToZoom = document.getElementById("featuredImg");
+            
+            // Get the <span> element that closes the modal
+            const closeBtn = document.getElementsByClassName("close-modal")[0];
+
+            // Open Modal when the user clicks the photo wrapper
+            trigger.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = imgToZoom.src;
+                document.body.style.overflow = "hidden";
+            }
+
+            // Function to close modal
+            function closeModal() {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+
+            // Close Modal on X click
+            closeBtn.onclick = closeModal;
+
+            // Close Modal when clicking anywhere outside the image
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            }
+
+            // Close Modal when pressing the 'Escape' key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === "Escape" && modal.style.display === "block") {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
-
-
-
-
-
-
